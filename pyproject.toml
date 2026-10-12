@@ -1,0 +1,166 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "subwyrhta"
+version = "0.8.0"
+description = "영상/음성 파일에서 고품질 자막(SRT/ASS/VTT/JSON)을 자동 생성하는 독립형 STT 도구"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+authors = [
+    {name = "good-ghost"},
+]
+keywords = ["stt", "subtitle", "whisper", "transcription", "speech-to-text", "caption"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Multimedia :: Video",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pyyaml>=6.0",
+    "structlog>=24.0",
+    "click>=8.1",
+    "tqdm>=4.66",
+    "ffmpeg-python>=0.2.0",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+stt = [
+    "whisperx>=3.1",
+    "faster-whisper>=1.0",
+    "av>=11,<19",  # faster-whisper 1.2.1 이 PyAV 19 에서 없어진 av.open(metadata_errors=) 를 쓴다
+    "silero-vad>=5.1",
+    "pysbd>=0.3.4",
+    "janome>=0.5",  # 일본어 문절 묶기 (글자 단위 단어)
+    "torch>=2.0",
+    "torchaudio>=2.0",
+]
+diarize = [
+    "pyannote.audio>=3.1",
+]
+enhance = [
+    "demucs>=4.0",
+    "noisereduce>=3.0",
+    "deepmultilingualpunctuation>=1.0",
+]
+llm = [
+    "openai>=1.40",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "types-PyYAML",
+    "types-tqdm",
+]
+all = [
+    "subwyrhta[stt,diarize,enhance]",
+]
+
+[project.urls]
+Homepage = "https://github.com/subwyrhta/subwyrhta"
+Documentation = "https://github.com/subwyrhta/subwyrhta#readme"
+Repository = "https://github.com/subwyrhta/subwyrhta"
+Issues = "https://github.com/subwyrhta/subwyrhta/issues"
+
+[project.scripts]
+subwyrhta = "src.main:cli"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.setuptools.package-data]
+src = ["py.typed", "*.yaml"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "TCH",  # flake8-type-checking
+    "RUF",  # ruff-specific rules
+]
+ignore = [
+    "E501",   # line length (handled by formatter)
+]
+# 중국어·일본어 문장 부호를 일부러 구분한다 (세그멘테이션·구두점·정규화)
+allowed-confusables = ["！", "？", "，", "；", "："]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = [
+    "whisperx.*",
+    "faster_whisper.*",
+    "silero_vad.*",
+    "pysbd.*",
+    "pyannote.*",
+    "demucs.*",
+    "noisereduce.*",
+    "ffmpeg.*",
+    "torchaudio.*",
+    "sentence_transformers.*",
+    "scenedetect.*",
+    "janome.*",
+    "openai.*",
+    "scipy.*",
+    "webrtcvad.*",
+    "deepmultilingualpunctuation.*",
+    "nemo.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "gpu: marks tests requiring GPU",
+    "integration: marks integration tests",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true

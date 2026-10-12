@@ -1,0 +1,84 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Models (large binary files)
+/models/
+*.pt
+*.bin
+*.onnx
+
+# Output
+output/
+
+# Checkpoint
+.checkpoint.json
+*.work/
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+credentials.json
+
+# Logs
+*.log
+
+# Web UI (serve)
+data/
+web/node_modules/
+# web/dist 는 공개한다 (빌드한 화면. vendor 없이도 serve 가 바로 쓴다)
+!web/dist/
+web/test-results/
+# UI 프레임워크 부분 빌드 (원본 비공개, 저장소에 올리지 않는다)
+web/vendor/
+# E2E 미디어 (web/e2e/server/make-fixtures.sh 로 만든다)
+web/e2e/fixtures/
+# E2E 결과 (스크린샷·동영상·요약·커버리지): npm run test:e2e 가 만든다
+docs/e2e/
+
+# 계획·요구사항 문서 (로컬 관리, 저장소에 올리지 않는다)
+docs/PROJECT-PLAN.md
+docs/REQUIREMENT.md
+docs/phases/
+docs/work-items/
+docs/TO-DO.md
+
+# 로컬 모델 캐시·패키지 빌드 산출물 (bystt-* 는 이름을 바꾸기 전에 만든 폴더)
+bystt-models/
+bystt.egg-info/
+subwyrhta-models/
+subwyrhta.egg-info/
+
+# 에이전트 설정 (저장소에 올리지 않는다)
+.claude/
+CLAUDE.md

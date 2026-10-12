@@ -1,0 +1,3 @@
+node_modules/
+# 빌드 산출물(dist)은 공개 저장소에 올린다: vendor(vue-smartview)가 비공개라 소스 빌드를 못 하는 사용자도 화면을 쓸 수 있게 한다
+test-results/

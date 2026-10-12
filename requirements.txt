@@ -1,0 +1,39 @@
+# SubWyrhta 의존성 (전부). 개발 도구는 requirements-dev.txt
+# CPU 전용 PyTorch 를 쓰려면: pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+
+# 코어
+pyyaml>=6.0
+structlog>=24.0
+click>=8.1
+tqdm>=4.66
+ffmpeg-python>=0.2.0
+python-dotenv>=1.0
+
+# STT 엔진
+whisperx>=3.1
+faster-whisper>=1.0
+# faster-whisper 1.2.1 의 디코더가 av.open(metadata_errors=) 를 쓰는데 PyAV 19 에서 그 인자가 없어졌다
+av>=11,<19
+silero-vad>=5.1
+pysbd>=0.3.4
+# 일본어 형태소 분석 (글자 단위 단어를 문절로 묶어 단어 중간에서 자막이 나뉘지 않게). 순수 Python
+janome>=0.5
+torch>=2.0
+torchaudio>=2.0
+
+# 웹 화면 (serve 서브커맨드)
+fastapi>=0.115
+uvicorn>=0.30
+ruamel.yaml>=0.18
+
+# 화자 분리 (Hugging Face 토큰과 모델 사용 조건 동의 필요, docs/OPERATIONS.md 2절)
+pyannote.audio>=3.1
+
+# 오디오 향상 (배경음 분리, 노이즈 억제, 구두점 복원)
+demucs>=4.0
+noisereduce>=3.0
+deepmultilingualpunctuation>=1.0
+
+# LLM 프로바이더 (OpenAI 호환 API: Gemini·OpenRouter·NVIDIA NIM·Ollama·로컬 서버).
+# 구독(claude-code, codex)은 패키지가 아니라 각 CLI 를 설치·로그인한다
+openai>=1.40
