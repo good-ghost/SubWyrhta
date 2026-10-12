@@ -1,5 +1,7 @@
 # SubWyrhta
 
+한국어 | [English](README.en.md)
+
 영상/음성 파일에서 고품질 자막(SRT/ASS/VTT/JSON)을 자동 생성하는 독립형 STT 도구.
 
 번역 기능은 포함하지 않으며, 음성 인식과 자막 생성에 특화되어 있다.
